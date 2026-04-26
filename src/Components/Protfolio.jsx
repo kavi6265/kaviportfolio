@@ -107,7 +107,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
             onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
             
             <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial map={cardTexture} clearcoat={0.5} roughness={0.5} envMapIntensity={1} />
+              <meshBasicMaterial map={cardTexture} />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
@@ -345,9 +345,9 @@ useEffect(() => {
 <div className="hero-right">
     <div className="portfolio-stage">
       <Canvas camera={{ position: [0, 0, 15], fov: 25 }} gl={{ transparent: true, antialias: true }}>
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <directionalLight position={[-5, 5, -5]} intensity={0.5} color="#ffffff" />
+        <ambientLight intensity={1} />
+        <directionalLight position={[5, 5, 5]} intensity={0.5} />
+        <directionalLight position={[-5, 5, -5]} intensity={0.3} color="#ffffff" />
         <Suspense fallback={null}>
           <Physics gravity={[0, -40, 0]}>
             <Band />
@@ -377,14 +377,10 @@ useEffect(() => {
     <div className="about-card-left">
       <h2 className="about-heading">About Me</h2>
       <p className="about-text">
-        I am a passionate UI/UX and Product Designer focused on creating user-centered and meaningful digital experiences. I enjoy solving real-world problems by understanding user needs and translating them into intuitive, functional, and visually consistent product solutions.
+        I am a passionate UI/UX and Product Designer focused on creating user-centered and meaningful digital experiences. I enjoy solving real-world problems by understanding user needs and translating them into intuitive, functional, and visually consistent product solutions.  
+        My design process includes research, user flows, wireframing, prototyping, and high-fidelity interface design. I have worked on projects such as e-commerce platforms, dashboards, and booking systems using tools like Figma, Miro, and Google Analytics. Beyond design, I'm a problem-solver at heart, always ready to collaborate, learn, and deliver impactful digital products that make a difference.
       </p>
-      <p className="about-text">
-        My design process includes research, user flows, wireframing, prototyping, and high-fidelity interface design. I have worked on projects such as e-commerce platforms, dashboards, and booking systems using tools like Figma, Miro, and Google Analytics.
-      </p>
-      <p className="about-text">
-        Beyond design, I'm a problem-solver at heart, always ready to collaborate, learn, and deliver impactful digital products that make a difference.
-      </p>
+      
       <a href="#contact">
         <button className="about-contact-btn">Contact</button>
       </a>
