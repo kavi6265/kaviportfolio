@@ -18,7 +18,7 @@ import emailjs from '@emailjs/browser';
 import { SiMiro, SiGoogleanalytics } from "react-icons/si";
 import { MdOutlineDesignServices } from "react-icons/md";
 import { HiOutlineLightBulb } from "react-icons/hi";
-import "../css/Protfolio.css";
+import "../Css/Protfolio.css";
 import hookImg from "../assets/gold-hook.png";
 import * as THREE from 'three'
 import { Canvas, extend, useThree, useFrame } from '@react-three/fiber'
