@@ -36,7 +36,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   
   const { nodes, materials } = useGLTF('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/5huRVDzcoDwnbgrKUo1Lzs/53b6dd7d6b4ffcdbd338fa60265949e1/tag.glb');
   const texture = useTexture('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/SOT1hmCesOHxEYxL7vkoZ/c57b29c85912047c414311723320c16b/band.jpg');
-  const cardTexture = useTexture("/profile.jpeg");
+  const cardTexture = useTexture("/photo.jpeg");
 
   const { width, height } = useThree((state) => state.size);
   const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
@@ -48,7 +48,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
       cardTexture.anisotropy = 16;
       cardTexture.center.set(0.5, 0.5);
       cardTexture.repeat.set(1, 1); 
-      cardTexture.offset.set(0.40, 0);
+      cardTexture.offset.set(0.2, 0);
       cardTexture.flipY = false;
       cardTexture.needsUpdate = true;
     }
@@ -107,7 +107,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
             onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
             
             <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial map={cardTexture} clearcoat={1} roughness={0.3} envMapIntensity={2} />
+              <meshPhysicalMaterial map={cardTexture} clearcoat={0.5} roughness={0.5} envMapIntensity={1} />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
@@ -235,10 +235,30 @@ useEffect(() => {
       }
     }
   };
+// 1. Define your projects with specific Behance/Live links
+const projects = [
+  { id: 1, title: "UI Design", linkName: "GPAY", img: "/gpay wallpaper.png", url: "https://www.behance.net/gallery/247714459/Google-Pay-app-redesign" },
+  { id: 2, title: "UI/UX Case Study", linkName: "Whatsapp", img: "/garuda wallpaper.png", url: "https://www.behance.net/gallery/247773125/Garuda-Aerospace-Redesign-Website" },
+  { id: 3, title: "Web Design & Development", linkName: "Foodyspot", img: "/car wallpaper.png", url: "https://www.behance.net/gallery/241325731/Car-Rental-Redesign-website" },
+  { id: 4, title: "UI Design", linkName: "Project Four", img: "/project1.jpg", url: "#" },
+  { id: 5, title: "UX Research", linkName: "Project Five", img: "/project2.jpg", url: "#" },
+  { id: 6, title: "Development", linkName: "Project Six", img: "/project3.jpg", url: "#" },
+];
 
+const [currentPage, setCurrentPage] = useState(0);
+const cardsPerPage = 3;
+const totalPages = Math.ceil(projects.length / cardsPerPage);
+
+// 2. Auto-slide logic: Shows a set of 3 cards, waits 6 seconds, moves to next set
+useEffect(() => {
+  const timer = setInterval(() => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+  }, 6000);
+  return () => clearInterval(timer);
+}, [totalPages]);
   return (
     <div className="wrapper">
-
+    <div id="root">
       {/* NAVBAR */}
       <motion.nav
         className="header-nav"
@@ -325,18 +345,15 @@ useEffect(() => {
 <div className="hero-right">
     <div className="portfolio-stage">
       <Canvas camera={{ position: [0, 0, 15], fov: 25 }} gl={{ transparent: true, antialias: true }}>
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <directionalLight position={[-5, 5, -5]} intensity={0.5} color="#ffffff" />
         <Suspense fallback={null}>
           <Physics gravity={[0, -40, 0]}>
             <Band />
           </Physics>
-          <Environment background={false} preset="city">
-            <Lightformer
-              intensity={2}
-              color="white"
-              position={[0, -1, 5]}
-              rotation={[0, 0, Math.PI / 3]}
-              scale={[100, 0.1, 1]}
-            />
+          <Environment background={false}>
+            <Lightformer intensity={1.5} color="white" position={[0, 5, 5]} rotation={[0, 0, Math.PI / 3]} scale={[10, 10, 1]} />
           </Environment>
         </Suspense>
       </Canvas>
@@ -347,31 +364,40 @@ useEffect(() => {
      
 
       {/* ABOUT SECTION */}
-      <motion.section
-        className="about-section"
-        id="about"
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
-      >
-        <motion.h2 className="about-heading" variants={scrollReveal}>
-          About Me
-        </motion.h2>
+   <motion.section
+  className="about-section"
+  id="about"
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: false, amount: 0.3 }}
+>
+  <motion.div className="about-card" variants={scrollReveal}>
 
-        <motion.div className="about-container" variants={staggerContainer}>
-          <motion.div className="about-image" variants={scrollReveal}>
-            <img src="/photo.jpeg" alt="About" />
-          </motion.div>
+    <div className="about-card-left">
+      <h2 className="about-heading">About Me</h2>
+      <p className="about-text">
+        I am a passionate UI/UX and Product Designer focused on creating user-centered and meaningful digital experiences. I enjoy solving real-world problems by understanding user needs and translating them into intuitive, functional, and visually consistent product solutions.
+      </p>
+      <p className="about-text">
+        My design process includes research, user flows, wireframing, prototyping, and high-fidelity interface design. I have worked on projects such as e-commerce platforms, dashboards, and booking systems using tools like Figma, Miro, and Google Analytics.
+      </p>
+      <p className="about-text">
+        Beyond design, I'm a problem-solver at heart, always ready to collaborate, learn, and deliver impactful digital products that make a difference.
+      </p>
+      <a href="#contact">
+        <button className="about-contact-btn">Contact</button>
+      </a>
+    </div>
 
-          <motion.div className="about-content" variants={scrollReveal}>
-            <p>
-             I am a passionate UI/UX and Product Designer focused on creating user-centered and meaningful digital experiences. I enjoy solving real-world problems by understanding user needs and translating them into intuitive, functional, and visually consistent product solutions. My design process includes research, user flows, wireframing, prototyping, and high-fidelity interface design. I have worked on projects such as e-commerce platforms, dashboards, and booking systems using tools like Figma, Miro, and Google Analytics. 
-            </p>
-           
-          </motion.div>
-        </motion.div>
-      </motion.section>
+    <div className="about-card-right">
+      <div className="about-image-circle">
+        <img src="/profile.jpeg" alt="Krishnamoorthy" />
+      </div>
+    </div>
+
+  </motion.div>
+</motion.section>
       {/* SKILLS SECTION */}
 {/* SKILLS SECTION */}
 <motion.section
@@ -388,27 +414,28 @@ useEffect(() => {
 
   <div className="skills-wrapper">
 
-    {/* DESIGN */}
+    {/* LEFT - DESIGN */}
     <motion.div className="skills-card large-card" variants={scrollReveal}>
       <h3>Design</h3>
+
       <div className="skills-grid-2">
         <div className="skill-box">
-          <MdOutlineDesignServices />
+          <div className="icon-card red"><MdOutlineDesignServices /></div>
           <span>UX Research</span>
         </div>
 
         <div className="skill-box">
-          <HiOutlineLightBulb />
+          <div className="icon-card blue"><HiOutlineLightBulb /></div>
           <span>Product Research</span>
         </div>
 
         <div className="skill-box">
-          <MdOutlineDesignServices />
+          <div className="icon-card purple"><MdOutlineDesignServices /></div>
           <span>UI Fundamentals</span>
         </div>
 
         <div className="skill-box">
-          <FaUsers />
+          <div className="icon-card green"><FaUsers /></div>
           <span>Communication</span>
         </div>
       </div>
@@ -420,19 +447,20 @@ useEffect(() => {
       {/* TOOLS */}
       <motion.div className="skills-card small-card" variants={scrollReveal}>
         <h3>Tools</h3>
+
         <div className="skills-grid-3">
           <div className="skill-box">
-            <FaFigma className="figma" />
+            <div className="icon-card orange"><FaFigma /></div>
             <span>Figma</span>
           </div>
 
           <div className="skill-box">
-            <SiMiro className="miro" />
+            <div className="icon-card yellow"><SiMiro /></div>
             <span>Miro</span>
           </div>
 
           <div className="skill-box">
-            <SiGoogleanalytics className="ga" />
+            <div className="icon-card yellow"><SiGoogleanalytics /></div>
             <span>Google Analytics</span>
           </div>
         </div>
@@ -441,14 +469,15 @@ useEffect(() => {
       {/* DEVELOPMENT */}
       <motion.div className="skills-card small-card" variants={scrollReveal}>
         <h3>Development</h3>
+
         <div className="skills-grid-2 center-items">
           <div className="skill-box">
-            <FaHtml5 className="html" />
+            <div className="icon-card red"><FaHtml5 /></div>
             <span>HTML</span>
           </div>
 
           <div className="skill-box">
-            <FaCss3Alt className="css" />
+            <div className="icon-card blue"><FaCss3Alt /></div>
             <span>CSS</span>
           </div>
         </div>
@@ -457,7 +486,6 @@ useEffect(() => {
     </div>
   </div>
 </motion.section>
-
 
 
 
@@ -504,7 +532,59 @@ Business Understand, and User Needs, Improve product Future
     <button className="hire-btn">Hire Me</button>
   </motion.div>
 
+{/* PROJECTS SECTION */}
 
+</motion.section>
+<motion.section className="projects-section" id="projects">
+  <h2 className="contact-title">Projects</h2>
+  {/* Decrease this width (e.g., 80% or 1100px) to make cards smaller overall */}
+  <div className="projects-container" style={{ width: '85%', maxWidth: '1200px', margin: '0 auto', overflow: 'hidden' }}>
+    
+    <motion.div 
+      className="projects-track"
+      animate={{ x: `-${currentPage * 100}%` }}
+      transition={{ duration: 0.8, ease: [0.45, 0, 0.55, 1] }}
+      style={{ display: 'flex' }}
+    >
+      {projects.map((project) => (
+        <div 
+          className="project-card-outer" 
+          key={project.id} 
+          style={{ 
+            minWidth: '33.333%', 
+            padding: '10px', // Decrease padding to bring cards closer
+            boxSizing: 'border-box' 
+          }}
+        >
+          <div className="project-card-v2">
+              <a href={project.url} target="_blank" rel="noreferrer" className="card-image-container">
+                 <img src={project.img} alt={project.title} />
+              </a>
+
+              <div className="card-details">
+                 <h4 className="card-category">
+                    <span>{project.title}</span>
+                 </h4>
+                 <a href={project.url} target="_blank" rel="noreferrer" className="card-project-name">
+                    {project.linkName}
+                 </a>
+              </div>
+          </div>
+        </div>
+      ))}
+    </motion.div>
+
+    {/* Dots */}
+    <div className="dots-wrapper">
+      {Array.from({ length: totalPages }).map((_, i) => (
+        <div
+          key={i}
+          className={`dot ${currentPage === i ? "active" : ""}`}
+          onClick={() => setCurrentPage(i)}
+        />
+      ))}
+    </div>
+  </div>
 </motion.section>
 {/* CONTACT SECTION */}
 <motion.section className="contact-section" id="contact">
@@ -549,6 +629,43 @@ Business Understand, and User Needs, Improve product Future
           </form>
         </div>
       </motion.section>
+      </div>
+      {/* FOOTER SECTION */}
+      <footer className="footer-section">
+        <div className="footer-container">
+
+          {/* Top row — nav + socials */}
+          <div className="footer-top-row">
+            <nav className="footer-nav-links">
+              <a href="#home"><span>Home</span></a>
+              <a href="#projects"><span>Project</span></a>
+              <a href="#about"><span>About me</span></a>
+              <a href="#contact"><span>Contact</span></a>
+            </nav>
+
+            <div className="footer-social-icons">
+              <a href="https://www.instagram.com/krishnamoorthy" target="_blank" rel="noreferrer" aria-label="Instagram" className="footer-social-ig">
+                <i className="fa-brands fa-instagram" />
+              </a>
+              <a href="https://www.linkedin.com/in/krishnamoorthy-m-7a7119379" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="footer-social-li">
+                <i className="fa-brands fa-linkedin" />
+              </a>
+              <a href="https://www.behance.net/krishnamoorthy51" target="_blank" rel="noreferrer" aria-label="Behance" className="footer-social-be">
+                <i className="fa-brands fa-behance" />
+              </a>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="footer-divider" />
+
+          {/* Bottom row — copyright */}
+          <div className="footer-bottom-row">
+            <p className="footer-copy">© 2025 Krishnamoorthy. All rights reserved</p>
+          </div>
+
+        </div>
+      </footer>
     </div>
   );
 }
