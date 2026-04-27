@@ -388,7 +388,7 @@ useEffect(() => {
 
     <div className="about-card-right">
       <div className="about-image-circle">
-        <img src="/profile.jpeg" alt="Krishnamoorthy" />
+        <img src="/image.jpeg" alt="Krishnamoorthy" />
       </div>
     </div>
 

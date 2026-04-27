@@ -666,11 +666,13 @@ body {
   background: #888;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: -30px;
 }
 
 .dot.active {
   background: #000; /* Black dot like your image */
   transform: scale(1.2);
+  
 }
 .contact-section {
   padding: 80px 20px;

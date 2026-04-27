@@ -135,3 +135,6 @@ function Band() {
   );
 }
 export default IDCard3D;
+git add .
+git commit -m "update"
+git push
