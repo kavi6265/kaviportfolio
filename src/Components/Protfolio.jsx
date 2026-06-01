@@ -6,12 +6,22 @@ import {
   useSpring,
   useAnimationFrame
 } from "framer-motion";
+
 import {
   FaFigma,
   FaHtml5,
   FaCss3Alt,
-  FaUsers
+  FaUsers,
+  FaJsSquare, 
+  FaPython,
+  FaChartBar,
+  FaGithub,
+  FaLaptopCode,
+  FaGitAlt 
 } from "react-icons/fa";
+import { SiFlask, SiMongodb, SiJupyter, SiGooglecolab } from 'react-icons/si';
+import { DiMysql } from 'react-icons/di';
+import { VscVscode } from 'react-icons/vsc';
 import { FaBehance, FaLinkedin } from "react-icons/fa";
 import { LuSend } from "react-icons/lu";
 import emailjs from '@emailjs/browser';
@@ -36,7 +46,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   
   const { nodes, materials } = useGLTF('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/5huRVDzcoDwnbgrKUo1Lzs/53b6dd7d6b4ffcdbd338fa60265949e1/tag.glb');
   const texture = useTexture('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/SOT1hmCesOHxEYxL7vkoZ/c57b29c85912047c414311723320c16b/band.jpg');
-  const cardTexture = useTexture("/photo.jpeg");
+  const cardTexture = useTexture("/myprofile .jpeg");
 
   const { width, height } = useThree((state) => state.size);
   const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
@@ -46,9 +56,10 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   useEffect(() => {
     if (cardTexture) {
       cardTexture.anisotropy = 16;
-      cardTexture.center.set(0.5, 0.5);
-      cardTexture.repeat.set(1, 1); 
-      cardTexture.offset.set(0.2, 0);
+     
+      cardTexture.repeat.set(1.8, 1);
+      cardTexture.offset.set(0.1, 0);
+      cardTexture.rotation = 0;
       cardTexture.flipY = false;
       cardTexture.needsUpdate = true;
     }
@@ -88,7 +99,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 
   return (
     <>
-      <group position={[0.8, 5, 0]}> {/* Positioned right to avoid overlapping bio */}
+      <group position={[0, 5, 0]}> {/* Centered position for mobile */}
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         {[j1, j2, j3].map((ref, i) => (
           <RigidBody key={i} position={[0.5 * (i + 1), 0, 0]} ref={ref} {...segmentProps}>
@@ -124,10 +135,19 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   );
 }
 function Protfolio() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -150,9 +170,9 @@ const form = useRef(); // 2. Create a ref for the form
     e.preventDefault();
 
     // Replace these with your actual IDs from EmailJS dashboard
-    const SERVICE_ID = "service_ue7fl4p";
-    const TEMPLATE_ID = "template_f719cv7";
-    const PUBLIC_KEY = "ryVSlsM2rZyOME2Jk";
+    const SERVICE_ID = "service_7e2y6dr";
+    const TEMPLATE_ID = "template_9160hqn";
+    const PUBLIC_KEY = "zN7QKXckeIAiCga_K";
 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
@@ -241,15 +261,13 @@ const projects = [
   { id: 2, title: "UI/UX Case Study", linkName: "Whatsapp", img: "/garuda wallpaper.png", url: "https://www.behance.net/gallery/247773125/Garuda-Aerospace-Redesign-Website" },
   { id: 3, title: "Web Design & Development", linkName: "Foodyspot", img: "/car wallpaper.png", url: "https://www.behance.net/gallery/241325731/Car-Rental-Redesign-website" },
   { id: 4, title: "UI Design", linkName: "Project Four", img: "/project1.jpg", url: "#" },
-  { id: 5, title: "UX Research", linkName: "Project Five", img: "/project2.jpg", url: "#" },
-  { id: 6, title: "Development", linkName: "Project Six", img: "/project3.jpg", url: "#" },
 ];
 
 const [currentPage, setCurrentPage] = useState(0);
-const cardsPerPage = 3;
+const cardsPerPage = 2;
 const totalPages = Math.ceil(projects.length / cardsPerPage);
 
-// 2. Auto-slide logic: Shows a set of 3 cards, waits 6 seconds, moves to next set
+// Auto-slide: every 6 seconds move to next page
 useEffect(() => {
   const timer = setInterval(() => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
@@ -267,7 +285,7 @@ useEffect(() => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="header-container">
-          <div className="header-logo">Krish.design</div>
+          <div className="header-logo">Kavi.dev</div>
 
           <div className="header-menu">
             <a href="#home">Home</a>
@@ -279,16 +297,57 @@ useEffect(() => {
           </div>
 
          <div className="header-socials">
-  <a href="https://www.behance.net/krishnamoorthy51" target="_blank" rel="noreferrer">
-    <FaBehance size={22} />
-  </a>
-
-  <a href="https://www.linkedin.com/in/krishnamoorthy-m-7a7119379" target="_blank" rel="noreferrer">
+  <a href="https://github.com/kavi6265" target="_blank" rel="noreferrer">
+  <FaGithub size={22} />
+</a>
+  <a href="https://www.linkedin.com/in/kaviyarasu-c-85b6a22a8/" target="_blank" rel="noreferrer">
     <FaLinkedin size={22} />
   </a>
 </div>
+
+          {/* Mobile Menu Toggle */}
+          <div 
+            className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </motion.nav>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`}>
+        {/* Mobile Menu Header */}
+        <div className="mobile-menu-header">
+          <div className="mobile-menu-logo">Kavi.dev</div>
+          <button className="mobile-menu-close" onClick={closeMobileMenu}>
+            ✕
+          </button>
+        </div>
+
+        {/* Mobile Menu Content */}
+        <div className="mobile-menu-content">
+          <div className="mobile-menu-links">
+            <a href="#home" onClick={closeMobileMenu}>Home</a>
+            <a href="#about" onClick={closeMobileMenu}>About</a>
+            <a href="#skills" onClick={closeMobileMenu}>Skills</a>
+            <a href="#services" onClick={closeMobileMenu}>Services</a>
+            <a href="#projects" onClick={closeMobileMenu}>Projects</a>
+            <a href="#contact" onClick={closeMobileMenu}>Contact</a>
+          </div>
+          
+          <div className="mobile-menu-socials">
+            <a href="https://github.com/kavi6265" target="_blank" rel="noreferrer">
+              <FaGithub size={32} />
+            </a>
+            <a href="https://www.linkedin.com/in/kaviyarasu-c-85b6a22a8/" target="_blank" rel="noreferrer">
+              <FaLinkedin size={32} />
+            </a>
+          </div>
+        </div>
+      </div>
 
       {/* HERO SECTION */}
       <motion.section id="home" className="hero-section">
@@ -310,7 +369,7 @@ useEffect(() => {
         },
       }}
     >
-      {"Krishnamoorthy".split("").map((char, index) => (
+      {"Kaviyarasu".split("").map((char, index) => (
         <motion.span
           key={index}
           variants={{
@@ -335,7 +394,7 @@ useEffect(() => {
     <a href="#contact">
       <button className="btn-contact">Contact</button>
       </a>
-      <a href="/krishnamoorthy pvt resume.pdf" download>
+      <a href="/myresume.pdf" download>
   <button className="btn-download">Download CV</button>
 </a>
     </div>
@@ -377,8 +436,7 @@ useEffect(() => {
     <div className="about-card-left">
       <h2 className="about-heading">About Me</h2>
       <p className="about-text">
-        I am a passionate UI/UX and Product Designer focused on creating user-centered and meaningful digital experiences. I enjoy solving real-world problems by understanding user needs and translating them into intuitive, functional, and visually consistent product solutions.  
-        My design process includes research, user flows, wireframing, prototyping, and high-fidelity interface design. I have worked on projects such as e-commerce platforms, dashboards, and booking systems using tools like Figma, Miro, and Google Analytics. Beyond design, I'm a problem-solver at heart, always ready to collaborate, learn, and deliver impactful digital products that make a difference.
+       I am a passionate Information Technology graduate with a strong interest in web development, software development, and emerging technologies. I enjoy building practical and user-friendly applications while solving real-world problems through technology. My experience includes developing web applications using Python Flask, HTML, CSS, JavaScript, and MongoDB, along with using Git and GitHub for version control and project collaboration. I am also proficient in Microsoft Excel for data management, analysis, and reporting. Through academic projects and internships, I have developed strong problem-solving, analytical thinking, and teamwork skills. I am a continuous learner who is always eager to explore new technologies, enhance my technical expertise, and contribute to innovative projects that create meaningful impact.
       </p>
       
       <a href="#contact">
@@ -388,7 +446,7 @@ useEffect(() => {
 
     <div className="about-card-right">
       <div className="about-image-circle">
-        <img src="/image.jpeg" alt="Krishnamoorthy" />
+        <img src="/myphoto.jpeg" alt="Kaviyarasu" />
       </div>
     </div>
 
@@ -411,73 +469,106 @@ useEffect(() => {
   <div className="skills-wrapper">
 
     {/* LEFT - DESIGN */}
-    <motion.div className="skills-card large-card" variants={scrollReveal}>
-      <h3>Design</h3>
+<motion.div className="skills-card large-card" variants={scrollReveal}>
+  <h3>Development</h3>
 
-      <div className="skills-grid-2">
-        <div className="skill-box">
-          <div className="icon-card red"><MdOutlineDesignServices /></div>
-          <span>UX Research</span>
-        </div>
+  {/* CRITICAL: Ensure this class name is exactly skills-grid-3 */}
+  <div className="skills-grid-3">
+    <div className="skill-box">
+      <div className="icon-card red"><FaHtml5 /></div>
+      <span>HTML</span>
+    </div>
 
-        <div className="skill-box">
-          <div className="icon-card blue"><HiOutlineLightBulb /></div>
-          <span>Product Research</span>
-        </div>
+    <div className="skill-box">
+      <div className="icon-card blue"><FaCss3Alt /></div>
+      <span>CSS</span>
+    </div>
 
-        <div className="skill-box">
-          <div className="icon-card purple"><MdOutlineDesignServices /></div>
-          <span>UI Fundamentals</span>
-        </div>
+    <div className="skill-box">
+      <div className="icon-card yellow"><FaJsSquare /></div>
+      <span>JavaScript</span>
+    </div>
 
-        <div className="skill-box">
-          <div className="icon-card green"><FaUsers /></div>
-          <span>Communication</span>
-        </div>
-      </div>
-    </motion.div>
+    <div className="skill-box">
+      <div className="icon-card blue-alt"><FaPython /></div>
+      <span>Python</span>
+    </div>
 
+    <div className="skill-box">
+      <div className="icon-card green-light"><SiFlask /></div>
+      <span>Flask</span>
+    </div>
+
+    <div className="skill-box">
+      <div className="icon-card green"><SiMongodb /></div>
+      <span>MongoDB</span>
+    </div>
+
+    <div className="skill-box">
+      <div className="icon-card red-alt"><DiMysql /></div>
+      <span>MySQL</span>
+    </div>
+
+    <div className="skill-box">
+      <div className="icon-card purple"><FaGithub /></div>
+      <span>GitHub</span>
+    </div>
+  </div>
+</motion.div>
     {/* RIGHT SIDE */}
     <div className="skills-right">
 
       {/* TOOLS */}
-      <motion.div className="skills-card small-card" variants={scrollReveal}>
-        <h3>Tools</h3>
+   <motion.div className="skills-card small-card" variants={scrollReveal}>
+  <h3>Analytical Tools</h3>
 
-        <div className="skills-grid-3">
-          <div className="skill-box">
-            <div className="icon-card orange"><FaFigma /></div>
-            <span>Figma</span>
-          </div>
+  <div className="skills-grid-3">
+    {/* Jupyter Card */}
+    <div className="skill-box">
+      <div className="icon-card" style={{ backgroundColor: 'rgba(243, 118, 38, 0.15)' }}>
+        <SiJupyter color="#F37626" size="1.5em" />
+      </div>
+      <span>Jupyter</span>
+    </div>
 
-          <div className="skill-box">
-            <div className="icon-card yellow"><SiMiro /></div>
-            <span>Miro</span>
-          </div>
+    {/* Google Colab Card */}
+    <div className="skill-box">
+      <div className="icon-card" style={{ backgroundColor: 'rgba(249, 171, 0, 0.15)' }}>
+        <SiGooglecolab color="#F9AB00" size="1.5em" />
+      </div>
+      <span>Google Colab</span>
+    </div>
 
-          <div className="skill-box">
-            <div className="icon-card yellow"><SiGoogleanalytics /></div>
-            <span>Google Analytics</span>
-          </div>
-        </div>
-      </motion.div>
+    {/* Power BI Card */}
+    <div className="skill-box">
+      <div className="icon-card" style={{ backgroundColor: 'rgba(242, 200, 17, 0.15)' }}>
+        <FaChartBar color="#F2C811" size="1.5em" />
+      </div>
+      <span>Power BI</span>
+    </div>
+  </div>
+</motion.div>
 
       {/* DEVELOPMENT */}
       <motion.div className="skills-card small-card" variants={scrollReveal}>
-        <h3>Development</h3>
+  <h3>Development Evironment/Editor</h3>
 
-        <div className="skills-grid-2 center-items">
-          <div className="skill-box">
-            <div className="icon-card red"><FaHtml5 /></div>
-            <span>HTML</span>
-          </div>
+  <div className="skills-grid-2 center-items">
+    
 
-          <div className="skill-box">
-            <div className="icon-card blue"><FaCss3Alt /></div>
-            <span>CSS</span>
-          </div>
-        </div>
-      </motion.div>
+    {/* Git - Using an orange background to match its brand */}
+    <div className="skill-box">
+      <div className="icon-card" style={{ backgroundColor: 'rgba(120, 9, 211, 0.81)' }}><FaGitAlt /></div>
+      <span>Git</span>
+    </div>
+
+    {/* VS Code - Using your existing blue background class */}
+    <div className="skill-box">
+      <div className="icon-card blue"><VscVscode /></div>
+      <span>VS Code</span>
+    </div>
+  </div>
+</motion.div>
 
     </div>
   </div>
@@ -501,22 +592,24 @@ useEffect(() => {
   <motion.div className="service-row" variants={staggerContainer}>
 
     <motion.div className="service-card" variants={scrollReveal}>
-      <div className="service-icon">{"🎨"}</div>
-      <h3>UI/UX Designer</h3>
-      <p>
-       
-Problem Research,  Designing, Aesthetic, and Accessible, User Interface
-      </p>
-    </motion.div>
+ <div className="service-icon">
+    <FaLaptopCode size={35} />
+  </div>
+  <h3>Web Developer</h3>
+  <p>
+    Building responsive websites and web applications using HTML, CSS, JavaScript, Python Flask, and MongoDB.
+  </p>
+</motion.div>
 
-    <motion.div className="service-card" variants={scrollReveal}>
-      <div className="service-icon">🎨</div>
-      <h3>Product Designer</h3>
-      <p>
-       
-Business Understand, and User Needs, Improve product Future
-      </p>
-    </motion.div>
+<motion.div className="service-card" variants={scrollReveal}>
+ <div className="service-icon">
+    <FaChartBar size={35} />
+  </div>
+  <h3>Data Analyst</h3>
+  <p>
+    Transforming raw data into meaningful insights using Excel, data visualization, and analytical techniques.
+  </p>
+</motion.div>
 
     
 
@@ -524,8 +617,9 @@ Business Understand, and User Needs, Improve product Future
   <motion.div
     className="hire-wrapper"
     variants={scrollReveal}
-  >
-    <button className="hire-btn">Hire Me</button>
+  ><a href="#contact">
+    <button className="hire-btn" >Hire Me</button>
+    </a>
   </motion.div>
 
 {/* PROJECTS SECTION */}
@@ -533,12 +627,11 @@ Business Understand, and User Needs, Improve product Future
 </motion.section>
 <motion.section className="projects-section" id="projects">
   <h2 className="contact-title">Projects</h2>
-  {/* Decrease this width (e.g., 80% or 1100px) to make cards smaller overall */}
   <div className="projects-container" style={{ width: '85%', maxWidth: '1200px', margin: '0 auto', overflow: 'hidden' }}>
     
     <motion.div 
       className="projects-track"
-      animate={{ x: `-${currentPage * 100}%` }}
+      animate={{ x: `-${currentPage * cardsPerPage * 50}%` }}
       transition={{ duration: 0.8, ease: [0.45, 0, 0.55, 1] }}
       style={{ display: 'flex' }}
     >
@@ -547,8 +640,8 @@ Business Understand, and User Needs, Improve product Future
           className="project-card-outer" 
           key={project.id} 
           style={{ 
-            minWidth: '33.333%', 
-            padding: '10px', // Decrease padding to bring cards closer
+            minWidth: '50%', 
+            padding: '10px',
             boxSizing: 'border-box' 
           }}
         >
@@ -556,7 +649,6 @@ Business Understand, and User Needs, Improve product Future
               <a href={project.url} target="_blank" rel="noreferrer" className="card-image-container">
                  <img src={project.img} alt={project.title} />
               </a>
-
               <div className="card-details">
                  <h4 className="card-category">
                     <span>{project.title}</span>
@@ -640,14 +732,14 @@ Business Understand, and User Needs, Improve product Future
             </nav>
 
             <div className="footer-social-icons">
-              <a href="https://www.instagram.com/krishnamoorthy" target="_blank" rel="noreferrer" aria-label="Instagram" className="footer-social-ig">
+              <a href="https://www.instagram.com/kavi_arasu_6265" target="_blank" rel="noreferrer" aria-label="Instagram" className="footer-social-ig">
                 <i className="fa-brands fa-instagram" />
               </a>
-              <a href="https://www.linkedin.com/in/krishnamoorthy-m-7a7119379" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="footer-social-li">
+              <a href="https://www.linkedin.com/in/kaviyarasu-c-85b6a22a8/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="footer-social-li">
                 <i className="fa-brands fa-linkedin" />
               </a>
-              <a href="https://www.behance.net/krishnamoorthy51" target="_blank" rel="noreferrer" aria-label="Behance" className="footer-social-be">
-                <i className="fa-brands fa-behance" />
+              <a href="https://github.com/kavi6265" target="_blank" rel="noreferrer" aria-label="Behance" className="footer-social-be">
+                <i className="fa-brands fa-github" />
               </a>
             </div>
           </div>
@@ -657,7 +749,7 @@ Business Understand, and User Needs, Improve product Future
 
           {/* Bottom row — copyright */}
           <div className="footer-bottom-row">
-            <p className="footer-copy">© 2025 Krishnamoorthy. All rights reserved</p>
+            <p className="footer-copy">© 2026 Kavi. All rights reserved</p>
           </div>
 
         </div>
