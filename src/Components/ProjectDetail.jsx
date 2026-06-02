@@ -175,7 +175,7 @@ function ProjectDetail() {
         <h2>Key Features</h2>
         <ul className="detail-features">
           {project.features.map((f, i) => (
-            <li key={i}>* {f}</li>
+            <li key={i}> {f}</li>
           ))}
         </ul>
       </motion.section>
