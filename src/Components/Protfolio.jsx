@@ -28,6 +28,7 @@ import emailjs from '@emailjs/browser';
 import { SiMiro, SiGoogleanalytics } from "react-icons/si";
 import { MdOutlineDesignServices } from "react-icons/md";
 import { HiOutlineLightBulb } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 import "../Css/Protfolio.css";
 import hookImg from "../assets/gold-hook.png";
 import * as THREE from 'three'
@@ -257,23 +258,13 @@ useEffect(() => {
   };
 // 1. Define your projects with specific Behance/Live links
 const projects = [
-  { id: 1, title: "UI Design", linkName: "GPAY", img: "/gpay wallpaper.png", url: "https://www.behance.net/gallery/247714459/Google-Pay-app-redesign" },
-  { id: 2, title: "UI/UX Case Study", linkName: "Whatsapp", img: "/garuda wallpaper.png", url: "https://www.behance.net/gallery/247773125/Garuda-Aerospace-Redesign-Website" },
-  { id: 3, title: "Web Design & Development", linkName: "Foodyspot", img: "/car wallpaper.png", url: "https://www.behance.net/gallery/241325731/Car-Rental-Redesign-website" },
-  { id: 4, title: "UI Design", linkName: "Project Four", img: "/project1.jpg", url: "#" },
+  { id: 1, title: "Full Stack Development", linkName: "Quick Food App Delivery", img: "/project1.png", url: "/project/quick-food-app-delivery" },
+  { id: 2, title: "Data Analysis", linkName: "Gas Analysis", img: "/Project2.png", url: "/project/gas-analysis" },
 ];
 
 const [currentPage, setCurrentPage] = useState(0);
-const cardsPerPage = 2;
-const totalPages = Math.ceil(projects.length / cardsPerPage);
-
-// Auto-slide: every 6 seconds move to next page
-useEffect(() => {
-  const timer = setInterval(() => {
-    setCurrentPage((prev) => (prev + 1) % totalPages);
-  }, 6000);
-  return () => clearInterval(timer);
-}, [totalPages]);
+const cardsPerPage = 1;
+const totalPages = projects.length;
   return (
     <div className="wrapper">
     <div id="root">
@@ -627,49 +618,24 @@ useEffect(() => {
 </motion.section>
 <motion.section className="projects-section" id="projects">
   <h2 className="contact-title">Projects</h2>
-  <div className="projects-container" style={{ width: '85%', maxWidth: '1200px', margin: '0 auto', overflow: 'hidden' }}>
-    
-    <motion.div 
-      className="projects-track"
-      animate={{ x: `-${currentPage * cardsPerPage * 50}%` }}
-      transition={{ duration: 0.8, ease: [0.45, 0, 0.55, 1] }}
-      style={{ display: 'flex' }}
-    >
+  <div className="projects-container" style={{ width: '85%', maxWidth: '1200px', margin: '0 auto' }}>
+    <div className="projects-grid">
       {projects.map((project) => (
-        <div 
-          className="project-card-outer" 
-          key={project.id} 
-          style={{ 
-            minWidth: '50%', 
-            padding: '10px',
-            boxSizing: 'border-box' 
-          }}
-        >
+        <div className="project-card-outer" key={project.id}>
           <div className="project-card-v2">
-              <a href={project.url} target="_blank" rel="noreferrer" className="card-image-container">
-                 <img src={project.img} alt={project.title} />
-              </a>
-              <div className="card-details">
-                 <h4 className="card-category">
-                    <span>{project.title}</span>
-                 </h4>
-                 <a href={project.url} target="_blank" rel="noreferrer" className="card-project-name">
-                    {project.linkName}
-                 </a>
-              </div>
+            <Link to={project.url} className="card-image-container">
+              <img src={project.img} alt={project.title} />
+            </Link>
+            <div className="card-details">
+              <h4 className="card-category">
+                <span>{project.title}</span>
+              </h4>
+              <Link to={project.url} className="card-project-name">
+                {project.linkName}
+              </Link>
+            </div>
           </div>
         </div>
-      ))}
-    </motion.div>
-
-    {/* Dots */}
-    <div className="dots-wrapper">
-      {Array.from({ length: totalPages }).map((_, i) => (
-        <div
-          key={i}
-          className={`dot ${currentPage === i ? "active" : ""}`}
-          onClick={() => setCurrentPage(i)}
-        />
       ))}
     </div>
   </div>
